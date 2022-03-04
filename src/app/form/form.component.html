@@ -1,0 +1,120 @@
+<div class="container-fluid ">
+    <div class="row">
+    <div class="col-3 mt-5" style="margin-left: 0%; overflow: auto;">
+      <div class="card bg-light text-dark mt-3">
+        <div class="card-body">
+          <h1 style="text-align: center; padding-bottom:10px;">Form</h1>
+          <p style="color: red;">* Required Filed</p>
+          <hr>
+          <div class="form-group pt-2">
+            <label>First Name<strong style="color: red; padding-left:3px;">*</strong></label>
+            <input type="text" class="form-control"  placeholder="Enter First Name"  required #fname="ngModel"
+             [(ngModel)]="user.fname"  pattern="[a-zA-Z]+$">
+            <small *ngIf="!fname.valid && fname.touched" style="color:red;">
+              First Name is required
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Last Name<strong style="color: red; padding-left:3px;">*</strong></label>
+            <input type="text" class="form-control"  placeholder="Enter Last Name"  required #lname="ngModel"
+             [(ngModel)]="user.lname" pattern="[A-Za-z]+$" >
+             <small *ngIf="!lname.valid && lname.touched" style="color:red;">
+              Last Name is required
+             </small>
+          </div>
+          <div class="form-group">
+            <label>Mobile Number<strong style="color: red; padding-left:3px;">*</strong></label>
+            <input type="number" class="form-control"  placeholder="Enter Mobile Number"  required #number="ngModel"
+             [(ngModel)]="user.number"  pattern="[0-9]+$">
+             <small *ngIf="!number.valid && number.touched" style="color:red;">
+               Number is required
+             </small>
+          </div>
+          <label for="pwd">Gender<strong style="color: red; padding-left:3px;">*</strong></label><br>
+          <div class="row">
+            <div class="col-4" >
+          <input type="radio" value="Male" [(ngModel)]="user.gender">
+          <label > Male</label>
+        </div>
+        <div class="col-4">
+          <input type="radio" value="Female" [(ngModel)]="user.gender">
+          <label> Female</label>
+          </div>
+        <div class="col-4">
+         <input type="radio" value="other" [(ngModel)]="user.gender">
+          <label>other</label>
+        </div>
+      
+       
+          <div class="form-group">
+            <label>Email<strong style="color: red; padding-left:3px;">*</strong></label>
+            <input type="email" class="form-control" placeholder="Enter Email" required email #email="ngModel"
+             [(ngModel)]="user.email">
+             <small *ngIf="!email.valid && email.touched" style="color:red;">
+              email is required
+             </small>
+          </div>
+          <div class="form-group  ml-4">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" value="Agree" [(ngModel)]="user.reply" > I agree on blabla.
+            </label>
+          </div>
+          <div class="form-group ml-4">
+            <label>Remark:</label>
+            <input type="text" class="form-control" placeholder="Enter Remark" [(ngModel)]="user.remark">
+          <button type="submit" *ngIf="!isEdit" class="btn btn-success" style="text-align: center; margin-top: 2vh;" (click)="submit()" [disabled]="user.fname=='' || user.lname=='' || user.number=='' || user.email=='' || user.gender=='' || user.reply=='' || user.remark==''">Submit</button>
+          <button type="submit"  *ngIf="isEdit" class="btn btn-success" style="text-align: center; margin-top: 2vh;" (click)="update()" [disabled]="user.fname=='' || user.lname=='' || user.number=='' || user.email==''|| user.gender==''|| user.reply=='' || user.remark==''">Update</button>
+          <button type="submit" class="btn btn-danger" style="text-align: center; margin-left: 2vh; margin-top: 2vh" (click)="cancle()">Clear</button>
+        </div>
+      </div>
+    </div>
+   </div>
+    <div class="col-9 mt-5" style=" position:fixed;left:25%;top: 0;">
+      <div class="row">
+        <div class="col-6 mt-4">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search"  [(ngModel)]="Search">
+          </div>
+          <div class="col-6  mt-4 text-right">
+          <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Dropdown button
+            </button>
+            <div class="dropdown-menu">
+              <p class="dropdown-item" href="">All</p>
+              <p class="dropdown-item" href=""> male</p>
+              <p class="dropdown-item" href="">Female</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+      <table class="table table-dark mt-3 ">
+        <thead>
+          <tr>
+            <th>Sr.No</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Mobile number</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr" *ngFor='let user of userList |filter:Search | orderBy: order;let i=index'>
+            <td>{{i+1}}</td>
+            <td>{{user.fname}}</td>
+            <td>{{user.lname}}</td>
+            <td>{{user.number}}</td>
+            <td>{{user.gender}}</td>
+            <td>{{user.email}}</td> 
+            <td>
+              <button type="submit" class="btn btn-success" style="text-align: center" (click)="onEdit(i)">Edit</button>
+              <button type="submit" class="btn btn-danger" style="text-align: center; margin-left: 2vh" (click)="delete(i)">Delete</button>
+            </td>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
